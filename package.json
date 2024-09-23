@@ -36,7 +36,8 @@
   "license": "MIT",
   "homepage": "https://github.com/n0xgg04/expo-applovin-ads#readme",
   "dependencies": {
-    "expo": "^51.0.32"
+    "expo": "^51.0.32",
+    "react-native-applovin-max": "^8.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.25",
