@@ -31,7 +31,6 @@ function addAppLovinApiKey(gradle, apiKey) {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.applovin.mediation:vungle-adapter:+'
     implementation 'com.applovin.mediation:unityads-adapter:+'
-    implementation 'com.applovin.mediation:verve-adapter:+'
 }`,
   );
 
