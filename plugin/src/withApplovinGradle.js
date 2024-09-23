@@ -23,14 +23,21 @@ function addAppLovinApiKey(gradle, apiKey) {
   gradle.contents = gradle.contents.replace(
     /(dependencies {[\w\W]+?)(?<=\n)}/,
     `$1
-    implementation 'com.applovin:applovin-sdk:+'
-    implementation 'com.applovin.mediation:google-adapter:+'
-}`,
+        implementation 'com.applovin:applovin-sdk:+'
+        implementation 'com.applovin.mediation:google-adapter:+'
+    }`,
   );
 
   gradle.contents = gradle.contents.replace(
     appLovinPlugin,
     appLovinPlugin + `${appLovinApiKey}`,
+  );
+
+  gradle.contents = gradle.contents.replace(
+    /(android {[\w\W]+?)(compileSdkVersion\s+\d+)/,
+    `$1
+    compileSdkVersion 31
+    `,
   );
 
   return gradle;

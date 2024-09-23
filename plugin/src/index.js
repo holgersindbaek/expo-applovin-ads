@@ -5,6 +5,11 @@ const withAppLovinPodfile = require("./withDangerousMod");
 
 module.exports = function withApplovinPlugin(config, data) {
   return withApplovinProjectGradle(
-    withAppLovinPodfile(withApplovinManifest(withApplovinGradle(config, data))),
+    withAppLovinPodfile(
+      withApplovinManifest(
+        withApplovinGradle(config, data),
+        data
+      )
+    )
   );
 };
