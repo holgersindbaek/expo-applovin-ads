@@ -23,9 +23,16 @@ function addAppLovinApiKey(gradle, apiKey) {
   gradle.contents = gradle.contents.replace(
     /(dependencies {[\w\W]+?)(?<=\n)}/,
     `$1
-        implementation 'com.applovin:applovin-sdk:+'
-        implementation 'com.applovin.mediation:google-adapter:+'
-    }`,
+    implementation 'com.applovin:applovin-sdk:+'
+    implementation 'com.applovin.mediation:google-ad-manager-adapter:+'
+    implementation 'com.applovin.mediation:google-adapter:+'
+    implementation 'com.applovin.mediation:inmobi-adapter:+'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.applovin.mediation:vungle-adapter:+'
+    implementation 'com.applovin.mediation:unityads-adapter:+'
+    implementation 'com.applovin.mediation:verve-adapter:+'
+}`,
   );
 
   gradle.contents = gradle.contents.replace(

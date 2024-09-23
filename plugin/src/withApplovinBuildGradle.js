@@ -11,19 +11,40 @@ module.exports = function withApplovinProjectGradle(config) {
 
 function addAppLovinMaven(gradle) {
   const repositoriesPattern = /repositories\s*{([\s\S]*?)}/;
-  const applovinRepository =
-    "maven { url 'https://artifacts.applovin.com/android' }";
+  const applovinRepository = "maven { url 'https://artifacts.applovin.com/android' }";
+  const verveRepository = 'maven { url "https://verve.jfrog.io/artifactory/verve-gradle-release" }';
 
-  if (gradle.contents.includes(applovinRepository)) {
-    return gradle;
+  const repositoriesBlock = gradle.contents.match(repositoriesPattern);
+  if (repositoriesBlock) {
+    const existingRepositories = repositoriesBlock[1];
+
+    // Add AppLovin and Verve repositories if they don't already exist
+    let newRepositories = existingRepositories;
+
+    if (!existingRepositories.includes(applovinRepository)) {
+      newRepositories += `    ${applovinRepository}\n`;
+    }
+
+    if (!existingRepositories.includes(verveRepository)) {
+      newRepositories += `    ${verveRepository}\n`;
+    }
+
+    gradle.contents = gradle.contents.replace(
+      repositoriesPattern,
+      `repositories {\n${newRepositories}}`
+    );
+  } else {
+    // If no repositories block exists, add one with the necessary repositories
+    gradle.contents += `
+repositories {
+    google()
+    mavenCentral()
+    ${applovinRepository}
+    ${verveRepository}
+}
+`;
   }
 
-  gradle.contents = gradle.contents.replace(
-    repositoriesPattern,
-    (match, group1) => {
-      return match.replace(group1, group1 + `    ${applovinRepository}\n    google()\n    mavenCentral()\n`);
-    },
-  );
   return gradle;
 }
 
