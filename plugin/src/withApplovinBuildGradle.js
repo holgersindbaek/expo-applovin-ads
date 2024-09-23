@@ -21,7 +21,7 @@ function addAppLovinMaven(gradle) {
   gradle.contents = gradle.contents.replace(
     repositoriesPattern,
     (match, group1) => {
-      return match.replace(group1, group1 + `    ${applovinRepository}\n`);
+      return match.replace(group1, group1 + `    ${applovinRepository}\n    google()\n    mavenCentral()\n`);
     },
   );
   return gradle;

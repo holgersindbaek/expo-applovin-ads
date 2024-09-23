@@ -24,6 +24,7 @@ function addAppLovinApiKey(gradle, apiKey) {
     /(dependencies {[\w\W]+?)(?<=\n)}/,
     `$1
     implementation 'com.applovin:applovin-sdk:+'
+    implementation 'com.applovin.mediation:google-adapter:+'
 }`,
   );
 
