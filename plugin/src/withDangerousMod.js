@@ -16,6 +16,10 @@ module.exports = function withAppLovinPodfile(config) {
       // Add AppLovin SDK and mediation pods to the Podfile
       const appLovinPods = `
   pod 'AppLovinSDK'
+  pod 'AppLovinMediationGoogleAdapter'
+  pod 'AppLovinMediationUnityAdsAdapter'
+  pod 'AppLovinMediationVungleAdapter'
+  pod 'AppLovinMediationInMobiAdapter'
 end
   `
 

@@ -15,7 +15,8 @@
     "open:ios": "xed example/ios",
     "open:android": "open -a \"Android Studio\" example/android",
     "android": "expo run:android",
-    "ios": "expo run:ios"
+    "ios": "expo run:ios",
+    "setup-applovin-ios": "ruby plugin/src/AppLovinQualityServiceSetup-ios.rb install"
   },
   "keywords": [
     "react-native",
