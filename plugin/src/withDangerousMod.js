@@ -52,6 +52,9 @@ function withInfoPlistChanges(config) {
       config.modResults.LSApplicationQueriesSchemes.push('about');
     }
 
+    // Add NSUserTrackingUsageDescription
+    config.modResults.NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you.";
+
     return config;
   });
 }
