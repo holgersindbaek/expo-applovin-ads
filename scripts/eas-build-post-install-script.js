@@ -77,7 +77,7 @@ else {
   });
 
   function callback(e) {
-    fs.unlinkSync(newPath);
+    // fs.unlinkSync(newPath);
     console.log("EXIT", e);
     process.exit();
   }
