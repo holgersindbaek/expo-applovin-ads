@@ -12,14 +12,25 @@ function modifyPodfile(contents) {
   pod 'AppLovinMediationInMobiAdapter'
 `
 
-  const appLovinSetup = `
+  // Find the existing post_install hook
+  const postInstallRegex = /post_install\s+do\s+\|installer\|([\s\S]*?)end/;
+  const match = contents.match(postInstallRegex);
+
+  if (match) {
+    // If there's an existing post_install hook, add our command to it
+    const existingHook = match[1];
+    const newHook = `${existingHook}
+    system("ruby \#{Dir.pwd}/AppLovinQualityServiceSetup-ios.rb")`;
+    return contents.replace(postInstallRegex, `post_install do |installer|${newHook}\nend`) + appLovinPods;
+  } else {
+    // If there's no existing post_install hook, add a new one
+    const appLovinSetup = `
 post_install do |installer|
   system("ruby \#{Dir.pwd}/AppLovinQualityServiceSetup-ios.rb")
 end
 `
-
-  // Replace the last 'end' in the Podfile with the AppLovin pods and setup
-  return contents.replace(/end[\n ]*?$/g, `${appLovinPods}\n${appLovinSetup}\nend`)
+    return contents + appLovinPods + appLovinSetup;
+  }
 }
 
 module.exports = function withAppLovinPodfile(config) {
