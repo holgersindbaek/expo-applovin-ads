@@ -9,7 +9,8 @@ module.exports = function withApplovinPlugin(config, data) {
       withApplovinManifest(
         withApplovinGradle(config, data),
         data
-      )
+      ),
+      data
     )
   );
 };

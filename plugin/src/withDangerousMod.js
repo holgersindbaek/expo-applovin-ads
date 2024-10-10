@@ -1,4 +1,4 @@
-const { withDangerousMod, withXcodeProject } = require('@expo/config-plugins');
+const { withDangerousMod, withXcodeProject, withInfoPlist } = require('@expo/config-plugins');
 const fs = require('fs');
 const path = require('path');
 
@@ -33,7 +33,16 @@ end
   }
 }
 
-module.exports = function withAppLovinPodfile(config) {
+function withAdMobAppId(config, admobAppId) {
+  return withInfoPlist(config, config => {
+    if (admobAppId) {
+      config.modResults.GADApplicationIdentifier = admobAppId;
+    }
+    return config;
+  });
+}
+
+module.exports = function withAppLovinPodfile(config, data) {
   // First, modify the Podfile
   config = withDangerousMod(config, [
     'ios',
@@ -52,7 +61,7 @@ module.exports = function withAppLovinPodfile(config) {
   ])
 
   // Then, modify the Xcode project
-  return withXcodeProject(config, (config) => {
+  config = withXcodeProject(config, (config) => {
     const xcodeProject = config.modResults;
     const projectRoot = config.modRequest.projectRoot;
     
@@ -82,4 +91,9 @@ module.exports = function withAppLovinPodfile(config) {
     
     return config;
   });
-}
+
+  // Add this line to apply the AdMob App ID modification
+  config = withAdMobAppId(config, data.admobAppId);
+
+  return config;
+};
