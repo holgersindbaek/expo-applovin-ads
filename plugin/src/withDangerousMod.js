@@ -10,6 +10,8 @@ function modifyPodfile(contents) {
   pod 'AppLovinMediationUnityAdsAdapter'
   pod 'AppLovinMediationVungleAdapter'
   pod 'AppLovinMediationInMobiAdapter'
+  pod 'AppLovinMediationFacebookAdapter'
+  pod 'AppLovinMediationSmaatoAdapter'
 `
 
   // Find the existing post_install hook
