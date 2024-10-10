@@ -44,9 +44,30 @@ module.exports = function withAppLovinPodfile(config) {
   return withXcodeProject(config, (config) => {
     const xcodeProject = config.modResults;
     const projectRoot = config.modRequest.projectRoot;
-    const filePath = path.join(projectRoot, 'ios', 'AppLovinQualityServiceSetup-ios.rb');
     
-    xcodeProject.addResourceFile(filePath, { target: 'DoubleDeckPinochle' });
+    console.log('Project root:', projectRoot);
+    console.log('Xcode project:', xcodeProject ? 'Loaded' : 'Not loaded');
+
+    if (!xcodeProject) {
+      console.error('Xcode project not loaded correctly');
+      return config;
+    }
+
+    const filePath = path.join(projectRoot, 'ios', 'AppLovinQualityServiceSetup-ios.rb');
+    console.log('Ruby script path:', filePath);
+    console.log('Ruby script exists:', fs.existsSync(filePath));
+
+    if (!fs.existsSync(filePath)) {
+      console.error('Ruby script file does not exist');
+      return config;
+    }
+
+    try {
+      xcodeProject.addResourceFile(filePath, { target: 'DoubleDeckPinochle' });
+      console.log('Resource file added successfully');
+    } catch (error) {
+      console.error('Error adding resource file:', error);
+    }
     
     return config;
   });

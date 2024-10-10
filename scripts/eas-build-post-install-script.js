@@ -50,7 +50,12 @@ else {
 
   // We copy the file to the project root
   const newPath = path.join(process.cwd(), "ios", scriptFileName);
-  fs.copyFileSync(path.join(dir, sourcePath, scriptFileName), newPath);
+  if (fs.existsSync(path.join(dir, sourcePath, scriptFileName))) {
+    fs.copyFileSync(path.join(dir, sourcePath, scriptFileName), newPath);
+    console.log("Ruby script copied successfully");
+  } else {
+    console.error("Source Ruby script not found");
+  }
 
   console.log("Current working directory:", process.cwd());
   console.log("New path for Ruby script:", newPath);
