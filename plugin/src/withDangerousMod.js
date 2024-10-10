@@ -42,6 +42,20 @@ function withAdMobAppId(config, admobAppId) {
   });
 }
 
+function withInfoPlistChanges(config) {
+  return withInfoPlist(config, config => {
+    // Add 'about' to LSApplicationQueriesSchemes
+    if (!config.modResults.LSApplicationQueriesSchemes) {
+      config.modResults.LSApplicationQueriesSchemes = [];
+    }
+    if (!config.modResults.LSApplicationQueriesSchemes.includes('about')) {
+      config.modResults.LSApplicationQueriesSchemes.push('about');
+    }
+
+    return config;
+  });
+}
+
 module.exports = function withAppLovinPodfile(config, data) {
   // First, modify the Podfile
   config = withDangerousMod(config, [
@@ -94,6 +108,9 @@ module.exports = function withAppLovinPodfile(config, data) {
 
   // Add this line to apply the AdMob App ID modification
   config = withAdMobAppId(config, data.admobAppId);
+
+  // Add Info.plist changes
+  config = withInfoPlistChanges(config);
 
   return config;
 };
