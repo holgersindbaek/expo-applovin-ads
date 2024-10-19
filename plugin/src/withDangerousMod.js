@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 
 function modifyPodfile(contents) {
-  // Add AppLovin SDK and mediation pods to the Podfile
   const appLovinPods = `
   pod 'AppLovinSDK'
   pod 'AppLovinMediationGoogleAdapter'
@@ -13,6 +12,7 @@ function modifyPodfile(contents) {
   pod 'AppLovinMediationInMobiAdapter'
   pod 'AppLovinMediationFacebookAdapter'
   pod 'AppLovinMediationSmaatoAdapter'
+  pod 'AppLovinMediationOguryPresageAdapter'
 `
 
   // Find the existing post_install hook
