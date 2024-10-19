@@ -7,6 +7,7 @@ function modifyPodfile(contents) {
   const appLovinPods = `
   pod 'AppLovinSDK'
   pod 'AppLovinMediationGoogleAdapter'
+  pod 'AppLovinMediationGoogleAdManagerAdapter'
   pod 'AppLovinMediationUnityAdsAdapter'
   pod 'AppLovinMediationVungleAdapter'
   pod 'AppLovinMediationInMobiAdapter'
