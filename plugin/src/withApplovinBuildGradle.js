@@ -15,6 +15,9 @@ function addAppLovinMaven(gradle) {
   const oguryRepository = "maven { url 'https://maven.ogury.co' }";
   const jitpackRepository = "maven { url 'https://jitpack.io' }";
 
+  console.log("Current repositories:");
+  console.log(gradle.contents.match(repositoriesPattern)?.[0] || "No repositories found");
+
   const repositoriesBlock = gradle.contents.match(repositoriesPattern);
   if (repositoriesBlock) {
     const existingRepositories = repositoriesBlock[1];
@@ -46,6 +49,9 @@ repositories {
 }
 `;
   }
+
+  console.log("Updated repositories:");
+  console.log(gradle.contents.match(repositoriesPattern)?.[0] || "No repositories found");
 
   return gradle;
 }
