@@ -13,6 +13,7 @@ function addAppLovinMaven(gradle) {
   const repositoriesPattern = /repositories\s*{([\s\S]*?)}/;
   const applovinRepository = "maven { url 'https://artifacts.applovin.com/android' }";
   const oguryRepository = "maven { url 'https://maven.ogury.co' }";
+  const jitpackRepository = "maven { url 'https://jitpack.io' }";
 
   const repositoriesBlock = gradle.contents.match(repositoriesPattern);
   if (repositoriesBlock) {
@@ -23,7 +24,12 @@ function addAppLovinMaven(gradle) {
     if (!existingRepositories.includes(applovinRepository)) {
       newRepositories += `    ${applovinRepository}\n`;
     }
-    newRepositories += `    ${oguryRepository}\n`;
+    if (!existingRepositories.includes(oguryRepository)) {
+      newRepositories += `    ${oguryRepository}\n`;
+    }
+    if (!existingRepositories.includes(jitpackRepository)) {
+      newRepositories += `    ${jitpackRepository}\n`;
+    }
 
     gradle.contents = gradle.contents.replace(
       repositoriesPattern,
@@ -36,6 +42,7 @@ repositories {
     mavenCentral()
     ${oguryRepository}
     ${applovinRepository}
+    ${jitpackRepository}
 }
 `;
   }
