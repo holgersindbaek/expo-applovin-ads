@@ -12,16 +12,19 @@ module.exports = function withApplovinProjectGradle(config) {
 function addAppLovinMaven(gradle) {
   const repositoriesPattern = /repositories\s*{([\s\S]*?)}/;
   const applovinRepository = "maven { url 'https://artifacts.applovin.com/android' }";
+  const oguryRepository = "maven { url 'https://maven.ogury.co' }";
 
   const repositoriesBlock = gradle.contents.match(repositoriesPattern);
   if (repositoriesBlock) {
     const existingRepositories = repositoriesBlock[1];
 
-    // Add AppLovin repositories if they don't already exist
     let newRepositories = existingRepositories;
 
     if (!existingRepositories.includes(applovinRepository)) {
       newRepositories += `    ${applovinRepository}\n`;
+    }
+    if (!existingRepositories.includes(oguryRepository)) {
+      newRepositories += `    ${oguryRepository}\n`;
     }
 
     gradle.contents = gradle.contents.replace(
@@ -29,12 +32,11 @@ function addAppLovinMaven(gradle) {
       `repositories {\n${newRepositories}}`
     );
   } else {
-    // If no repositories block exists, add one with the necessary repositories
     gradle.contents += `
 repositories {
     google()
     mavenCentral()
-    maven { url "https://maven.ogury.co" }
+    ${oguryRepository}
     ${applovinRepository}
 }
 `;
