@@ -10,51 +10,48 @@ module.exports = function withApplovinProjectGradle(config) {
 };
 
 function addAppLovinMaven(gradle) {
-  const repositoriesPattern = /allprojects\s*{[\s\S]*?repositories\s*{([\s\S]*?)}\s*}/;
+  const repositoriesPattern = /repositories\s*{([\s\S]*?)}/;
   const applovinRepository = "maven { url 'https://artifacts.applovin.com/android' }";
   const oguryRepository = "maven { url 'https://maven.ogury.co' }";
   const jitpackRepository = "maven { url 'https://jitpack.io' }";
 
-  console.log("Current build.gradle contents:");
-  console.log(gradle.contents);
+  console.log("Current repositories:");
+  console.log(gradle.contents || "No repositories found");
 
   const repositoriesBlock = gradle.contents.match(repositoriesPattern);
   if (repositoriesBlock) {
-    let existingRepositories = repositoriesBlock[1];
+    const existingRepositories = repositoriesBlock[1];
+
+    let newRepositories = existingRepositories;
 
     if (!existingRepositories.includes(applovinRepository)) {
-      existingRepositories += `        ${applovinRepository}\n`;
+      newRepositories += `    ${applovinRepository}\n`;
     }
     if (!existingRepositories.includes(oguryRepository)) {
-      existingRepositories += `        ${oguryRepository}\n`;
+      newRepositories += `    ${oguryRepository}\n`;
     }
     if (!existingRepositories.includes(jitpackRepository)) {
-      existingRepositories += `        ${jitpackRepository}\n`;
+      newRepositories += `    ${jitpackRepository}\n`;
     }
 
     gradle.contents = gradle.contents.replace(
       repositoriesPattern,
-      `allprojects {
-    repositories {
-${existingRepositories}    }
-}`
+      `repositories {\n${newRepositories}}`
     );
   } else {
     gradle.contents += `
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        ${oguryRepository}
-        ${applovinRepository}
-        ${jitpackRepository}
-    }
+repositories {
+    google()
+    mavenCentral()
+    ${oguryRepository}
+    ${applovinRepository}
+    ${jitpackRepository}
 }
 `;
   }
 
-  console.log("Updated build.gradle contents:");
-  console.log(gradle.contents);
+  console.log("Updated repositories:");
+  console.log(gradle.contents || "No repositories found");
 
   return gradle;
 }
