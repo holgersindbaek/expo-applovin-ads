@@ -23,9 +23,7 @@ function addAppLovinMaven(gradle) {
     if (!existingRepositories.includes(applovinRepository)) {
       newRepositories += `    ${applovinRepository}\n`;
     }
-    if (!existingRepositories.includes(oguryRepository)) {
-      newRepositories += `    ${oguryRepository}\n`;
-    }
+    newRepositories += `    ${oguryRepository}\n`;
 
     gradle.contents = gradle.contents.replace(
       repositoriesPattern,
