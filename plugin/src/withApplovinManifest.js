@@ -11,6 +11,16 @@ module.exports = function withApplovinManifest(config, data) {
           "android:name": "com.google.android.gms.permission.AD_ID",
         },
       },
+      {
+        $: {
+          "android:name": "android.permission.INTERNET",
+        },
+      },
+      {
+        $: {
+          "android:name": "android.permission.ACCESS_NETWORK_STATE",
+        },
+      },
     ];
 
     // Add Google AdMob App ID metadata

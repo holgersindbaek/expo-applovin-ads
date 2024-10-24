@@ -34,6 +34,7 @@ function addAppLovinMaven(gradle) {
 repositories {
     google()
     mavenCentral()
+    maven { url "https://maven.ogury.co" }
     ${applovinRepository}
 }
 `;
